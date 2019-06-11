@@ -1,0 +1,32 @@
+<% include partials/header %>
+<head>
+        <link rel="stylesheet" type="text/css" href="/register.css">
+</head>
+
+<main>
+<h1>Welcome <%= currentUser.firstName %>, you're logged in to MotoMatch!</h1>
+</form>
+<h1>Add user</h1>
+<form method="POST" action="/register">
+    <label>First Name</label>
+    <input type="text" name="firstName">
+    <br>
+    <label>Last Name</label>
+    <input type="text" name="lastName">
+    <label>Password</label>
+    <input type="text" name="password">
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<ul> 
+<% users.forEach(function(user){ %>
+<li><%= user.firstName %> <%= user.lastName %> <a href="#" class="deleteUser" 
+    data-id="<%= user._id %>">
+    delete</a></li>
+<% }) %>
+</ul>
+<form method="get" action="/signout">
+    <button>Logout</button>
+</form>
+</main>
+<% include partials/footer %>

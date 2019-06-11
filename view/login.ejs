@@ -1,0 +1,22 @@
+<% include partials/header %>
+<head>
+    <link rel="stylesheet" type="text/css" href="/login.css">
+</head>
+<main>
+    <h1>Welcome to MotoMatch!</h1>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+
+    <a href="/home">Home</a>
+
+    <form method="post" action="/login">
+        <label>First Name
+            <input type="text" name="firstName">
+        </label>
+        <label>password
+            <input type="password" name="password">
+        </label>
+        <button>Log in</button>
+    </form>
+</main>
+<% include partials/footer %>
