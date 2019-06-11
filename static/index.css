@@ -1,0 +1,156 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "roboto";
+}
+
+#listmap {
+	border-top: 1px solid black;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	padding: 1em 0 1em 0;
+	background-color: white;
+	display: flex;
+	border-bottom: 1px solid black;
+}
+
+#listmap a{
+	width: 50%;
+	border-right: 1px solid black;
+}
+
+#bottomnav {
+	border-top: 1px solid black;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	padding: 1em 0 1em 0;
+	background-color: white;
+	display: flex;
+}
+
+nav a {
+	margin: 0em 0em 0em 0em;
+	text-decoration: none;
+	color: black;
+	width: 25%;
+	border-right: 1px solid black;
+}
+
+.exploreprofile {
+	border: 1px solid black;
+	border-radius: 1em;
+	margin: .5em;
+	overflow: hidden;
+}
+
+.exploreprofile h2 {
+	position: absolute;
+	color: white;
+	margin-left: 1em;
+
+}
+
+.exploreprofile p, .exploreprofile a {
+	margin-left: 1em;
+
+}
+
+.exploreprofile img {
+	width: 100%;
+	height: 18em;
+	object-fit: cover;
+	border-top-right-radius: 1em;
+	border-top-left-radius: 1em;
+}
+
+
+.exploreprofile a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.exploreprofile:first-of-type {
+	margin-top: 4em;
+}
+
+.exploreprofile:last-of-type {
+	margin-bottom: 4em;
+}
+
+.listprofile {
+	border-bottom: 1px solid black;
+	display: flex;
+}
+
+.listprofile img {
+	max-width: 100%;
+	max-height: 5em;
+	border-radius: 100em;
+	margin: .5em 0 .5em .2em;
+}
+
+.listprofile h2 {
+	margin: .8em 0 0 0;
+}
+
+.listprofile p {
+	opacity: .5;
+	margin-top: .5em;
+	display: block;
+}
+
+.profiletext {
+	margin-left: .5em;
+}
+
+#profile {
+	margin: 0 auto 0 auto;
+	text-align: center;
+}
+
+#profile h1 {
+	margin: 2em 0 .3em 0;
+}
+
+#userimg {
+	border-radius: 50%;
+	width: 10em;
+	height: 10em;
+	object-fit: cover;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.profileicons {
+	display: flex;
+	justify-content: center;
+}
+
+.icons {
+	border-radius: 50%;
+	width: 4em;
+	height: 4em;
+	object-fit: cover;
+	display: block;
+	border: 1px solid lightgray;
+}
+
+.search {
+	border-bottom: 1px solid black;
+}
+
+.search {
+	opacity: .7;
+	width: 100%;
+}
+
+.search input {
+	width: 100%;
+	padding: 1em;
+}
+
