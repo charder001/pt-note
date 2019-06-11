@@ -10,6 +10,8 @@ var mongojs = require("mongojs")
 var mongoose = require('mongoose')
 
 
+//testing branch
+
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
 var db = mongojs("MotoMatch", ["users"])
 var ObjectId = mongojs.ObjectID
@@ -44,6 +46,8 @@ express()
     maxAge: 1000 * 60 * 60
   }))
 
+
+
   //Setting view engine to EJS and assigning the views to the folder "view"
   .set("view engine", "ejs")
   .set("views", "view")
@@ -61,8 +65,8 @@ express()
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3000, function () {
-    console.log("Server listening on port 3000")
+  .listen(3008, function () {
+    console.log("Server listening on port 3008")
   })
 
 //Get "/dashboard"
