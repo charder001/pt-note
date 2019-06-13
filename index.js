@@ -8,9 +8,9 @@ var path = require("path")
 var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
-//Did it work?fef
 
-//testing branch
+var bcryptjs = require('bcriptjs');
+
 
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
 var db = mongojs("MotoMatch", ["users"])
@@ -99,21 +99,25 @@ function register(req, res) {
 function postregister(req, res) {
   var firstName = req.body.firstName
   var lastName = req.body.lastName
-  var password = req.body.password
+  bcryptjs.genSalt(10, function(err, salt) {
+    bcryptjs.hash(req.body.password, salt, function(err, hash) {
 
-  var newuser = new User()
-  newuser.firstName = firstName
-  newuser.lastName = lastName
-  newuser.password = password
-  newuser.save(function (err, savedUser) {
-    if (err) {
-      console.log(err)
-      return res.status(500).send()
-    }
+      var newuser = new User()
+      newuser.firstName = firstName
+      newuser.lastName = lastName
+      newuser.password = hash
+      newuser.save(function (err, savedUser) {
+        if (err) {
+          console.log(err)
+          return res.status(500).send()
+        }
+      console.log(newuser)
+      return res.status(200).redirect("/login")
 
-    return res.status(200).redirect("/login")
+    })
+  });
+});
 
-  })
 }
 
 //Get "/login"
