@@ -59,8 +59,10 @@ express()
   .get("/login", login)
   .get("/register", register)
   .get("/signout", signout)
+  .get("/update", getupdate)
   .post("/login", postlogin)
   .post("/register", postregister)
+  .post("/update", update)
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
@@ -142,6 +144,57 @@ function postlogin(req, res) {
     console.log("login succesful")
     res.redirect("/dashboard")
     res.status(200).send()
+  })
+}
+
+//get "/update"
+function getupdate(req, res){
+  if (!req.session.user) {
+    return res.status(401).redirect("login")
+  }
+  db.users.find(function (err, docs) {
+    return res.status(200).render("update", {
+      users: docs,
+      currentUser: req.session.user
+    }) 
+  })
+}
+
+//post "/update" 
+function update(req, res) {
+  var currentId = req.session.user._id
+  var id = currentId
+  console.log(currentId)
+  User.findOne({
+    _id: id
+  }, function (err, user) {
+    if (err) {
+      console.log(err)
+      return res.status(500).send()
+    } else {
+      if (!user) {
+        console.log("edit unsuccessful")
+        res.status(404).send()
+      } else {
+        if (req.body.firstName) {
+          user.firstName = req.body.firstName
+        }
+        if (req.body.lastName) {
+          user.lastName = req.body.lastName
+        }
+        if (req.body.password) {
+          user.password = req.body.password
+        }
+        user.save(function(err, updatedObject){
+          if(err){
+            console.log(err)
+            res.status(500).send()
+          } else {
+            res.redirect("dashboard")
+          }
+        })
+      }
+    }
   })
 }
 
