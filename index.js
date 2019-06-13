@@ -9,7 +9,7 @@ var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
 
-var bcryptjs = require('bcriptjs');
+var bcryptjs = require("bcryptjs")
 
 
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
@@ -26,6 +26,7 @@ var Schema = mongoose.Schema
 var userSchema = new Schema({
   firstName: String,
   lastName: String,
+  userName: {type:String, unique:true},
   password: String
 })
 
@@ -64,7 +65,7 @@ express()
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3008, function () {
+  .listen(3000, function () {
     console.log("Server listening on port 3008")
   })
 
@@ -99,12 +100,14 @@ function register(req, res) {
 function postregister(req, res) {
   var firstName = req.body.firstName
   var lastName = req.body.lastName
+  var emailaddress = req.body.emailaddress
   bcryptjs.genSalt(10, function(err, salt) {
     bcryptjs.hash(req.body.password, salt, function(err, hash) {
 
       var newuser = new User()
       newuser.firstName = firstName
       newuser.lastName = lastName
+      newuser.userName = emailaddress
       newuser.password = hash
       newuser.save(function (err, savedUser) {
         if (err) {
@@ -127,26 +130,27 @@ function login(req, res) {
 
 //Post "/login"
 function postlogin(req, res) {
-  var firstName = req.body.firstName
+  var username = req.body.userName
   var password = req.body.password
-
-  User.findOne({
-    firstName: firstName,
-    password: password
-  }, function (err, user) {
-    if (err) {
-      console.log(err)
-      return res.status(500).send()
-    }
-    if (!user) {
-      console.log("login unsuccessful")
-      return res.status(404).redirect("/login")
-    }
-    req.session.user = user;
-    console.log("login succesful")
-    res.redirect("/dashboard")
-    res.status(200).send()
-  })
+  
+  User.findOne({userName:username}, function(err, user){    
+    bcryptjs.compare(password, user.password, function(err, user){
+      if (err) {
+        console.log(err)
+        res.status(500).send()
+      }
+      else if(user == true){
+        req.session.user = user;
+        console.log("login succesful")
+        res.redirect("/dashboard")
+        res.status(200).send()
+      }
+      else{
+        console.log("login unsuccessful")
+        res.status(404).redirect("/login")
+      }
+    });
+  });
 }
 
 //Get "/signout"
