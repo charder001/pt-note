@@ -9,8 +9,7 @@ var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
 
-//For hashing passwords
-var bcryptjs = require('bcryptjs')
+var bcryptjs = require('bcriptjs');
 
 
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
@@ -47,6 +46,8 @@ express()
     maxAge: 1000 * 60 * 60
   }))
 
+
+
   //Setting view engine to EJS and assigning the views to the folder "view"
   .set("view engine", "ejs")
   .set("views", "view")
@@ -59,13 +60,12 @@ express()
   .get("/register", register)
   .get("/signout", signout)
   .post("/login", postlogin)
-  .post("/users/add", submit)
   .post("/register", postregister)
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3000, function () {
-    console.log("Server listening on port 3000")
+  .listen(3008, function () {
+    console.log("Server listening on port 3008")
   })
 
 //Get "/dashboard"
@@ -87,19 +87,6 @@ function users(req, res) {
     res.render("users.ejs", {
       users: docs
     })
-  })
-}
-
-//Post "/users/add"
-function submit(req, res) {
-  var id = slug(req.body.firstName).toLowerCase()
-  var newUser = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password
-  }
-    db.users.insert(newUser, function (err, result) {
-    res.redirect("/login")
   })
 }
 
