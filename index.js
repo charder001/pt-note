@@ -8,8 +8,9 @@ var path = require("path")
 var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
+var multer = require('multer')
 
-var bcryptjs = require('bcriptjs');
+var bcryptjs = require('bcryptjs');
 
 
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
@@ -26,7 +27,8 @@ var Schema = mongoose.Schema
 var userSchema = new Schema({
   firstName: String,
   lastName: String,
-  password: String
+  password: String,
+  picture: Buffer
 })
 
 var User = mongoose.model("users", userSchema)
@@ -62,6 +64,9 @@ express()
   .post("/login", postlogin)
   .post("/register", postregister)
   .delete("/users/delete/:id", removeuser)
+  .post("/uploadpic", uploadpic)
+  .get("/photo/:id", photo)
+  .get("/photo",photo)
 
   //Listen on the defined port
   .listen(3008, function () {
@@ -106,6 +111,7 @@ function postregister(req, res) {
       newuser.firstName = firstName
       newuser.lastName = lastName
       newuser.password = hash
+      newuser.picture = picture
       newuser.save(function (err, savedUser) {
         if (err) {
           console.log(err)
@@ -119,6 +125,46 @@ function postregister(req, res) {
 });
 
 }
+
+//set multer storage
+var storage = multer.diskStorage({
+  destination: function (req, file, cb){
+    cb(null, 'uploads')
+  },
+  filename: function(req, file, cb){
+    cb(null, file.fieldname + '_' + Date.now())
+  }
+})
+var upload = multer ({storage: storage})
+
+//Saving from image to database
+function uploadpic (req, res){
+  var img = fs.readFileSync(req.file.path)
+  var encode_img = img.toString('base64')
+  var finalImg = {
+    contentType: req.file.mimetype,
+    image: new Buffer (encode_img, 'base64')
+  }
+  db.collection('quotes').insertOne(finalImg, function (err, result){
+    if (err){
+      return console.log(err)
+    }
+  })
+  }
+
+//retrieving pictures from database
+function photo (req, res){
+  var filename = req.params.id
+  db.collection('users').findOne({'_id':ObjectId(filename)}, function(err, result){
+    if(err){
+      return console.log(err)
+    }
+    res.contentType("image/jpeg")
+    res.send(result.image.buffer)
+  })
+res.render("/photo")
+}
+
 
 //Get "/login"
 function login(req, res) {
