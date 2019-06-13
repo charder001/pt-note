@@ -105,7 +105,7 @@ function submit(req, res) {
 
 //Get "/register"
 function register(req, res) {
-  res.render("register.ejs", {data:{title:'Register'}})
+  res.render("register.ejs")
 }
 
 //Post "/register" 
