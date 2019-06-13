@@ -60,7 +60,6 @@ express()
   .get("/register", register)
   .get("/signout", signout)
   .post("/login", postlogin)
-  .post("/users/add", submit)
   .post("/register", postregister)
   .delete("/users/delete/:id", removeuser)
 
@@ -88,19 +87,6 @@ function users(req, res) {
     res.render("users.ejs", {
       users: docs
     })
-  })
-}
-
-//Post "/users/add"
-function submit(req, res) {
-  var id = slug(req.body.firstName).toLowerCase()
-  var newUser = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password
-  }
-    db.users.insert(newUser, function (err, result) {
-    res.redirect("/login")
   })
 }
 
