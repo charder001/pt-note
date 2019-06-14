@@ -66,7 +66,7 @@ express()
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3008, function () {
+  .listen(3008, function () { 
     console.log("Server listening on port 3008")
   })
 
@@ -76,7 +76,11 @@ function dashboard(req, res) {
     return res.status(401).redirect("login")
   }
   User.find({},function (err, docs) {
+<<<<<<< HEAD
     console.log(req.ression.user)
+=======
+    console.log(req.session.user)
+>>>>>>> 38f7695f57ef3758bcd1aeaa1ce869deacd0e2a2
     return res.status(200).render("dashboard.ejs", {
       users: docs,
       currentUser: req.session.user
@@ -134,6 +138,7 @@ function postlogin(req, res) {
   var username = req.body.userName
   var password = req.body.password
 
+<<<<<<< HEAD
   User.findOne({userName:username}, function(err, user){    
     if (user){
     bcryptjs.compare(password, user.password, function(err, user){
@@ -147,6 +152,21 @@ function postlogin(req, res) {
   req.session.user = user;
 }
     else{
+=======
+  User.findOne({userName:username}, function(err, user){ 
+    console.log(user.firstName)   
+    if (user){
+    bcryptjs.compare(password, user.password, function(err, user){
+     
+      console.log("login succesful")
+      res.redirect("/dashboard")
+      return res.status(200).send()
+
+  })
+  req.session.user = user;
+}
+  else{
+>>>>>>> 38f7695f57ef3758bcd1aeaa1ce869deacd0e2a2
     console.log("login unsuccessful")
     return res.status(404).redirect("/login")
   }
