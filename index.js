@@ -75,7 +75,8 @@ function dashboard(req, res) {
   if (!req.session.user) {
     return res.status(401).redirect("login")
   }
-  db.users.find(function (err, docs) {
+  User.find({},function (err, docs) {
+    console.log(req.session.user)
     return res.status(200).render("dashboard.ejs", {
       users: docs,
       currentUser: req.session.user
@@ -133,20 +134,18 @@ function postlogin(req, res) {
   var username = req.body.userName
   var password = req.body.password
 
-  User.findOne({userName:username}, function(err, user){    
-    if (user == true){
+  User.findOne({userName:username}, function(err, user){ 
+    console.log(user.firstName)   
+    if (user){
     bcryptjs.compare(password, user.password, function(err, user){
-    if(user == true){
-    req.session.user = user;
-    console.log("login succesful")
-    res.redirect("/dashboard")
-    return res.status(200).send()
-  }   else if (err) {
-    console.log(err + "test")
-     res.status(500).redirect("/login")
-  }
+     
+      console.log("login succesful")
+      res.redirect("/dashboard")
+      return res.status(200).send()
 
-  })}
+  })
+  req.session.user = user;
+}
   else{
     console.log("login unsuccessful")
     return res.status(404).redirect("/login")
