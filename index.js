@@ -1,4 +1,3 @@
-require("dotenv").config()
 //setting package requirements
 var express = require("express")
 var session = require("express-session")
@@ -60,12 +59,14 @@ express()
   .get("/login", login)
   .get("/register", register)
   .get("/signout", signout)
+  .get("/update", getupdate)
   .post("/login", postlogin)
   .post("/register", postregister)
+  .post("/update", update)
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3000, function () {
+  .listen(3008, function () { 
     console.log("Server listening on port 3008")
   })
 
@@ -104,23 +105,22 @@ function postregister(req, res) {
   bcryptjs.genSalt(10, function(err, salt) {
     bcryptjs.hash(req.body.password, salt, function(err, hash) {
 
-      var newuser = new User()
-      newuser.firstName = firstName
-      newuser.lastName = lastName
-      newuser.userName = emailaddress
-      newuser.password = hash
-      newuser.save(function (err, savedUser) {
-        if (err) {
-          console.log(err)
-          return res.status(500).send()
-        }
-      console.log(newuser)
-      return res.status(200).redirect("/login")
+  var newuser = new User()
+  newuser.firstName = firstName
+  newuser.lastName = lastName
+  newuser.userName = emailaddress
+  newuser.password = hash
+  newuser.save(function (err, savedUser) {
+    if (err) {
+      console.log(err)
+      return res.status(500).send()
+    }
+    console.log(newuser)
+    return res.status(200).redirect("/login")
 
-    })
-  });
+  })
 });
-
+});
 }
 
 //Get "/login"
@@ -132,25 +132,77 @@ function login(req, res) {
 function postlogin(req, res) {
   var username = req.body.userName
   var password = req.body.password
-  
+
   User.findOne({userName:username}, function(err, user){    
+    if (user == true){
     bcryptjs.compare(password, user.password, function(err, user){
-      if (err) {
-        console.log(err)
-        res.status(500).send()
+    if(user == true){
+    req.session.user = user;
+    console.log("login succesful")
+    res.redirect("/dashboard")
+    return res.status(200).send()
+  }   else if (err) {
+    console.log(err + "test")
+     res.status(500).redirect("/login")
+  }
+
+  })}
+  else{
+    console.log("login unsuccessful")
+    return res.status(404).redirect("/login")
+  }
+})
+}
+  
+//get "/update"
+function getupdate(req, res){
+  if (!req.session.user) {
+    return res.status(401).redirect("login")
+  }
+  db.users.find(function (err, docs) {
+    return res.status(200).render("update", {
+      users: docs,
+      currentUser: req.session.user
+    }) 
+  })
+}
+
+//post "/update" 
+function update(req, res) {
+  var currentId = req.session.user._id
+  var id = currentId
+  console.log(currentId)
+  User.findOne({
+    _id: id
+  }, function (err, user) {
+    if (err) {
+      console.log(err)
+      return res.status(500).send()
+    } else {
+      if (!user) {
+        console.log("edit unsuccessful")
+        res.status(404).send()
+      } else {
+        if (req.body.firstName) {
+          user.firstName = req.body.firstName
+        }
+        if (req.body.lastName) {
+          user.lastName = req.body.lastName
+        }
+        if (req.body.password) {
+          user.password = req.body.password
+        }
+        user.save(function(err, updatedObject){
+          if(err){
+            console.log(err)
+            res.status(500).send()
+          } else {
+            res.redirect("dashboard")
+          }
+        })
       }
-      else if(user == true){
-        req.session.user = user;
-        console.log("login succesful")
-        res.redirect("/dashboard")
-        res.status(200).send()
-      }
-      else{
-        console.log("login unsuccessful")
-        res.status(404).redirect("/login")
-      }
-    });
-  });
+    }
+  })
 }
 
 //Get "/signout"
