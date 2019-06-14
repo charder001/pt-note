@@ -1,4 +1,3 @@
-require("dotenv").config()
 //setting package requirements
 var express = require("express")
 var session = require("express-session")
@@ -8,9 +7,9 @@ var path = require("path")
 var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
-//Did it work?fef
 
-//testing branch
+var bcryptjs = require("bcryptjs")
+
 
 //linking MongoJS to MongoDB Database called "MotoMatch" with the collection "users" 
 var db = mongojs("MotoMatch", ["users"])
@@ -26,6 +25,7 @@ var Schema = mongoose.Schema
 var userSchema = new Schema({
   firstName: String,
   lastName: String,
+  userName: {type:String, unique:true},
   password: String
 })
 
@@ -101,21 +101,26 @@ function register(req, res) {
 function postregister(req, res) {
   var firstName = req.body.firstName
   var lastName = req.body.lastName
-  var password = req.body.password
+  var emailaddress = req.body.emailaddress
+  bcryptjs.genSalt(10, function(err, salt) {
+    bcryptjs.hash(req.body.password, salt, function(err, hash) {
 
   var newuser = new User()
   newuser.firstName = firstName
   newuser.lastName = lastName
-  newuser.password = password
+  newuser.userName = emailaddress
+  newuser.password = hash
   newuser.save(function (err, savedUser) {
     if (err) {
       console.log(err)
       return res.status(500).send()
     }
-
+    console.log(newuser)
     return res.status(200).redirect("/login")
 
   })
+});
+});
 }
 
 //Get "/login"
@@ -125,28 +130,30 @@ function login(req, res) {
 
 //Post "/login"
 function postlogin(req, res) {
-  var firstName = req.body.firstName
+  var username = req.body.userName
   var password = req.body.password
 
-  User.findOne({
-    firstName: firstName,
-    password: password
-  }, function (err, user) {
-    if (err) {
-      console.log(err)
-      return res.status(500).send()
-    }
-    if (!user) {
-      console.log("login unsuccessful")
-      return res.status(404).redirect("/login")
-    }
+  User.findOne({userName:username}, function(err, user){    
+    if (user == true){
+    bcryptjs.compare(password, user.password, function(err, user){
+    if(user == true){
     req.session.user = user;
     console.log("login succesful")
     res.redirect("/dashboard")
-    res.status(200).send()
-  })
-}
+    return res.status(200).send()
+  }   else if (err) {
+    console.log(err + "test")
+     res.status(500).redirect("/login")
+  }
 
+  })}
+  else{
+    console.log("login unsuccessful")
+    return res.status(404).redirect("/login")
+  }
+})
+}
+  
 //get "/update"
 function getupdate(req, res){
   if (!req.session.user) {

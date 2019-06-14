@@ -1,14 +1,15 @@
 <% include partials/header %>
 <head>
-        <link rel="stylesheet" type="text/css" href="/register.css">
-    </head>
+    <link rel="stylesheet" type="text/css" href="/register.css">
+</head>
 
 <main>
 <h1>Register</h1>
 <form method="POST" action="/register">
-<label>First name<input type="text" name=firstName></label>
-<label>Last name<input type="text" name=lastName></label>
-<label>Password<input type="text" name=password></label>
+<label for="firstName">First name<input id="firstName" type="text" name="firstName"></label>
+<label for="lastName">Last name<input id="lastName" type="text" name="lastName"></label>
+<label for="emailaddress">Emailaddress<input id="emailaddress" type="email" name="emailaddress"></label>
+<label>Password<input type="password" name="password"></label>
 <a href="/login">back</a> <input type="submit" value="Submit">
 </form>
 </main>
