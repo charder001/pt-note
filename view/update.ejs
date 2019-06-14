@@ -1,0 +1,15 @@
+<% include partials/header %>
+<head>
+        <link rel="stylesheet" type="text/css" href="/register.css">
+    </head>
+
+<main>
+<h1>Update</h1>
+<form method="POST" action="/update">
+<label>First name<input type="text" name=firstName></label>
+<label>Last name<input type="text" name=lastName></label>
+<label>Password<input type="text" name=password></label>
+<a href="/login">back</a> <input type="submit" value="Submit">
+</form>
+</main>
+<% include partials/footer %>
