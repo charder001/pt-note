@@ -135,7 +135,7 @@ function postlogin(req, res) {
   var password = req.body.password
 
   User.findOne({userName:username}, function(err, user){ 
-    console.log(user.firstName)   
+
     if (user){
     bcryptjs.compare(password, user.password, function(err, user){
      
