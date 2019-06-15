@@ -7,6 +7,7 @@ var path = require("path")
 var find = require("array-find")
 var mongojs = require("mongojs")
 var mongoose = require('mongoose')
+var multer = require("multer")
 
 var bcryptjs = require("bcryptjs")
 
@@ -25,8 +26,12 @@ var Schema = mongoose.Schema
 var userSchema = new Schema({
   firstName: String,
   lastName: String,
-  userName: {type:String, unique:true},
-  password: String
+  userName: {
+    type: String,
+    unique: true
+  },
+  password: String,
+  profilePicture: String
 })
 
 var User = mongoose.model("users", userSchema)
@@ -66,7 +71,7 @@ express()
   .delete("/users/delete/:id", removeuser)
 
   //Listen on the defined port
-  .listen(3008, function () { 
+  .listen(3008, function () {
     console.log("Server listening on port 3008")
   })
 
@@ -75,12 +80,11 @@ function dashboard(req, res) {
   if (!req.session.user) {
     return res.status(401).redirect("login")
   }
-  User.find({},function (err, docs) {
+  User.find({}, function (err, docs) {
     console.log(req.session.user)
     return res.status(200).render("dashboard.ejs", {
       users: docs,
-      currentUser: req.session.user
-    })
+      currentUser: req.session.user    })
   })
 }
 
@@ -93,6 +97,38 @@ function users(req, res) {
   })
 }
 
+//Multer storage
+const storage = multer.diskStorage({
+  destination: './images/uploads/',
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+//process image
+const uploadImage = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1000000
+  },
+  fileFilter: function (req, file, callback) {
+    checkFileExt(file, callback);
+  }
+}).single('profilePicture');
+
+// check file type
+function checkFileExt(file, callback) {
+  const fileExt = /jpeg|jpg|png|gif/;
+  const extName = fileExt.test(path.extname(file.originalname).toLowerCase());
+  const mimeType = fileExt.test(file.mimetype);
+
+  if (mimeType && extName) {
+    return callback(null, true);
+  } else {
+    callback('File is not a image');
+  }
+}
+
 //Get "/register"
 function register(req, res) {
   res.render("register.ejs")
@@ -100,28 +136,46 @@ function register(req, res) {
 
 //Post "/register" 
 function postregister(req, res) {
-  var firstName = req.body.firstName
-  var lastName = req.body.lastName
-  var emailaddress = req.body.emailaddress
-  bcryptjs.genSalt(10, function(err, salt) {
-    bcryptjs.hash(req.body.password, salt, function(err, hash) {
 
-  var newuser = new User()
-  newuser.firstName = firstName
-  newuser.lastName = lastName
-  newuser.userName = emailaddress
-  newuser.password = hash
-  newuser.save(function (err, savedUser) {
-    if (err) {
-      console.log(err)
-      return res.status(500).send()
+  uploadImage(req, res, (error) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("rovy " + req.file);
+      if (req.file == undefined) {
+        console.log("no file uploaded");
+      } else {
+        var firstName = req.body.firstName
+        var lastName = req.body.lastName
+        var emailaddress = req.body.emailaddress
+        var profilePicture = `/images/uploads/${req.file.filename}`
+        bcryptjs.genSalt(10, function (err, salt) {
+          bcryptjs.hash(req.body.password, salt, function (err, hash) {
+
+            var newuser = new User()
+            newuser.firstName = firstName
+            newuser.lastName = lastName
+            newuser.userName = emailaddress
+            newuser.password = hash
+            newuser.profilePicture = profilePicture
+            newuser.save(function (err, savedUser) {
+              if (err) {
+                console.log(err)
+                return res.status(500).send()
+              }
+              console.log(newuser)
+              return res.status(200).redirect("/login")
+
+            })
+          });
+        });
+      }
     }
-    console.log(newuser)
-    return res.status(200).redirect("/login")
+  });
 
-  })
-});
-});
+
+
+
 }
 
 //Get "/login"
@@ -134,27 +188,28 @@ function postlogin(req, res) {
   var username = req.body.userName
   var password = req.body.password
 
-  User.findOne({userName:username}, function(err, user){ 
-    console.log(user.firstName)   
-    if (user){
-    bcryptjs.compare(password, user.password, function(err, user){
-     
-      console.log("login succesful")
-      res.redirect("/dashboard")
-      return res.status(200).send()
+  User.findOne({
+    userName: username
+  }, function (err, user) {
+    console.log(user.firstName)
+    if (user) {
+      bcryptjs.compare(password, user.password, function (err, user) {
 
+        console.log("login succesful")
+        res.redirect("/dashboard")
+        return res.status(200).send()
+
+      })
+      req.session.user = user;
+    } else {
+      console.log("login unsuccessful")
+      return res.status(404).redirect("/login")
+    }
   })
-  req.session.user = user;
 }
-  else{
-    console.log("login unsuccessful")
-    return res.status(404).redirect("/login")
-  }
-})
-}
-  
+
 //get "/update"
-function getupdate(req, res){
+function getupdate(req, res) {
   if (!req.session.user) {
     return res.status(401).redirect("login")
   }
@@ -162,7 +217,7 @@ function getupdate(req, res){
     return res.status(200).render("update", {
       users: docs,
       currentUser: req.session.user
-    }) 
+    })
   })
 }
 
@@ -191,8 +246,8 @@ function update(req, res) {
         if (req.body.password) {
           user.password = req.body.password
         }
-        user.save(function(err, updatedObject){
-          if(err){
+        user.save(function (err, updatedObject) {
+          if (err) {
             console.log(err)
             res.status(500).send()
           } else {
