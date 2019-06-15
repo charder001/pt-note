@@ -188,16 +188,6 @@ function postlogin(req, res) {
   var username = req.body.userName
   var password = req.body.password
 
-<<<<<<< HEAD
-  User.findOne({userName:username}, function(err, user){ 
-
-    if (user){
-    bcryptjs.compare(password, user.password, function(err, user){
-     
-      console.log("login succesful")
-      res.redirect("/dashboard")
-      return res.status(200).send()
-=======
   User.findOne({
     userName: username
   }, function (err, user) {
@@ -208,7 +198,6 @@ function postlogin(req, res) {
         console.log("login succesful")
         res.redirect("/dashboard")
         return res.status(200).send()
->>>>>>> b28083b0f7d06c8377228ed19a6f21a3a71df2bc
 
       })
       req.session.user = user;
