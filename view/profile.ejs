@@ -1,31 +1,15 @@
 <% include partials/header %>
-<style>
-p, h1, h2{
-    text-align: center
-}
-img{
-    border-radius: 50%;
-    display: block;
-    margin: 0 auto;
-}
-
-.profilepic{
-    background-color: #ea694e;
-    padding: 10px;
-}
-
-i{
-    color: #6868aa;
-    position: relative;
-    left: 270;
-}
-</style>
+<head>
+        <link rel="stylesheet" type="text/css" href="/profile.css">
+    </head>
 <body>
 <main>
+<%if (currentUser.profilePicture) { %>
 <div class="profilepic">
 <img src=<%= currentUser.profilePicture %> name="profilePicture">
 <a><i class="fas fa-edit"></i></a>
 </div>
+<% } %>
 <h1><%= currentUser.firstName%> <%= currentUser.lastName%></h1>
 <p><%= currentUser.userName%></p>
 <p><%= currentUser.genres%></p>

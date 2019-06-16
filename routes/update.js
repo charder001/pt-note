@@ -39,9 +39,8 @@ router.post('/', function(req, res) {
               if (req.body.password) {
                 bcryptjs.genSalt(10, function (err, salt) {
                   bcryptjs.hash(req.body.password, salt, function (err, hash) {
-                  user.password = hash
-                  console.log(user.password)
-                  });
+                    user.password = hash
+                  })
                 })
               }
               user.save(function (err, updatedObject) {
