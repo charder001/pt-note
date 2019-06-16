@@ -21,7 +21,9 @@ var login = require("./routes/login.js")
 var update = require("./routes/update.js");
 var signout = require("./routes/signout.js")
 var removeUser = require("./routes/remove-user.js")
+var profile = require("./routes/profile.js")
 var deleteUser = require("./routes/delete-user.js")
+
 
 //Linking mongoose to MongoDB Database called "MotoMatch"
 mongoose.connect('mongodb://' + "localhost" + '/' + "MotoMatch", {
@@ -57,7 +59,9 @@ express()
   .use("/signout", signout)
   .use("/update", update)
   .use("/users/delete/:id", removeUser)
+  .use("/profile", profile)
   .use("/users/delete", deleteUser)
+
 
   //Listen on the defined port
   .listen(3008, function () {
