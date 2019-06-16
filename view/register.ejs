@@ -1,56 +1,59 @@
 <% include partials/header %>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="/register.css">
+    <link rel="stylesheet" type="text/css" href="/login.css">
 </head>
 
 <main>
-<h1>Register</h1>
-<form method="POST" action="/register" enctype="multipart/form-data">
-    <label for="firstName">First name
-        <input id="firstName" type="text" name="firstName" placeholder="Enter your first name here">
-    </label>
-    <label for="lastName">Last name
-        <input id="lastName" type="text" name="lastName" placeholder="Enter your last name here">
-    </label>
-    <label for="emailaddress">Emailaddress
-        <input id="emailaddress" type="email" name="emailaddress" placeholder="Enter your emailaddress here">
-    </label>
-    <label for="password">Password
-        <input id="password" type="password" name="password" placeholder="Enter a password with at least 3 characters">
-    </label>
-    <label for="profilePicture">Profile Picture
-        <input id="profilePicture" type="file" name="profilePicture">
-    </label>
+    <h1>Register</h1>
+    <form method="POST" action="/register" enctype="multipart/form-data">
+        <label for="firstName">First name
+            <input id="firstName" type="text" name="firstName" placeholder="Enter your first name here">
+        </label>
+        <label for="lastName">Last name
+            <input id="lastName" type="text" name="lastName" placeholder="Enter your last name here">
+        </label>
+        <label for="emailaddress">Emailaddress
+            <input id="emailaddress" type="email" name="emailaddress" placeholder="Enter your emailaddress here">
+        </label>
+        <label for="password">Password
+            <input id="password" type="password" name="password"
+                placeholder="Enter a password with at least 3 characters">
+        </label>
+        <label for="profilePicture">Profile Picture
+            <input id="profilePicture" type="file" name="profilePicture">
+        </label>
 
 
+        <section id="genres">
+        <label class="genres" for="pop">
+            <span>Pop</span>
+            <input type="checkbox" id="pop" value="pop" name="genres">
+        </label>
+        <label class="genres" for="rock">
+            <span>Rock</span>
+            <input type="checkbox" id="rock" value="rock" name="genres">
+        </label>
+        <label class="genres" for="dance">
+            <span>Dance</span>
+            <input type="checkbox" id="dance" value="dance" name="genres">
+        </label>
+        <label class="genres" for="jazz">
+            <span>Jazz</span>
+            <input type="checkbox" id="jazz" value="jazz" name="genres">
+        </label>
+        <label class="genres" for="reggae">
+            <span>Reggae</span>
+            <input type="checkbox" id="reggae" value="reggae" name="genres">
+        </label>
+        <label class="genres" for="metal">
+            <span>Metal</span>
+            <input type="checkbox" id="metal" value="metal" name="genres">
+        </label>
+    </section>
 
-    <label class="genres" for="pop">
-        <input type="checkbox" id="pop" value="pop" name="genres">
-        <span>Pop</span>
-    </label>
-    <label class="genres" for="rock">
-        <input type="checkbox" id="rock" value="rock" name="genres">
-        <span>Rock</span>
-    </label>
-    <label class="genres" for="dance">
-        <input type="checkbox" id="dance" value="dance" name="genres">
-        <span>Dance</span>
-    </label>
-    <label class="genres" for="jazz">
-        <input type="checkbox" id="jazz" value="jazz" name="genres">
-        <span>Jazz</span>
-    </label>
-    <label class="genres" for="reggae">
-        <input type="checkbox" id="reggae" value="reggae" name="genres">
-        <span>Reggae</span>
-    </label>
-    <label class="genres" for="metal">
-        <input type="checkbox" id="metal" value="metal" name="genres">
-        <span>Metal</span>
-    </label>
-
-
-    <a href="/login">back</a> <input type="submit" value="Submit">
-</form>
+        <a href="/login">back</a> 
+        <button type="submit" value="Submit">Register</button>
+    </form>
 </main>
 <% include partials/footer %>

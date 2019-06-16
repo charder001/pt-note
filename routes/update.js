@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
     var currentId = req.session.user._id
     var id = currentId
-    console.log(currentId)
+    //console.log(currentId)
     
     User.findOne({_id: id}, function (err, user) {
         if (err) {
@@ -39,8 +39,9 @@ router.post('/', function(req, res) {
               if (req.body.password) {
                 bcryptjs.genSalt(10, function (err, salt) {
                   bcryptjs.hash(req.body.password, salt, function (err, hash) {
-                    user.password = hash
-                  })
+                  user.password = hash
+                  console.log(user.password)
+                  });
                 })
               }
               user.save(function (err, updatedObject) {
