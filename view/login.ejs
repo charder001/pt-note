@@ -8,6 +8,13 @@
     <a href="/register">Register</a>
 
     <a href="/">Home</a>
+    <%if(typeof errors !== 'undefined'){%>
+        <ul>
+        <%errors.forEach(function(elem){%>
+            <li><%= elem.msg _%></li>
+        <%})%>
+        </ul>
+    <%}%>
     <form method="post" action="/login">
         <label>Emailaddress
             <input id="userName" type="text" name="userName">

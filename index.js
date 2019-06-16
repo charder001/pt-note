@@ -9,6 +9,7 @@ var bodyParser = require("body-parser")
 var mongoose = require('mongoose')
 // var multer = require("multer")
 // var User = require('./models/user.js')
+var expressValidator = require('express-validator')
 
 // var bcryptjs = require("bcryptjs")
 
@@ -31,6 +32,7 @@ express()
   .use(bodyParser.urlencoded({
     extended: true
   }))
+  .use(expressValidator())
 
   //Configure sessions
   //https://www.youtube.com/watch?v=zsOGmMuwhT4&t=385s for help with user sessions

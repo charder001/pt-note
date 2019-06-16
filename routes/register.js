@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 var mongoose = require('mongoose')
 var multer = require("multer")
 var path = require("path")
 var bcryptjs = require("bcryptjs")
-var User = require('../models/user.js');
+var User = require('../models/user.js')
 
 const storage = multer.diskStorage({
     destination: './static/images/uploads/',
@@ -63,9 +63,12 @@ router.post('/', function (req, res) {
               newuser.lastName = lastName
               newuser.userName = emailaddress
               newuser.password = hash
-              genres.forEach(function(elem){
-                newuser.genres.push(elem)
-              })
+              // if(genres.length <= 1){
+                console.log(genres + " " + typeof Object.keys(genres))
+                genres.forEach(function(elem){
+                  newuser.genres.push(elem)
+                })
+
               newuser.profilePicture = profilePicture
               newuser.save(function (err, savedUser) {
                 if (err) {
