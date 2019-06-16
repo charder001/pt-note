@@ -44,15 +44,19 @@ router.post('/', function (req, res) {
     uploadImage(req, res, (error) => {
       if (error) {
         console.log(error);
-      } else {
-        console.log("rovy " + req.file);
-        if (req.file == undefined) {
-          console.log("no file uploaded");
-        } else {
+      } 
+      // else {
+      //   console.log("rovy " + req.file);
+      //   if (req.file == undefined) {
+      //     console.log("no file uploaded");
+      //   } 
+        else {
           var firstName = req.body.firstName
           var lastName = req.body.lastName
           var emailaddress = req.body.emailaddress
+          if (req.file){
           var profilePicture = `/images/uploads/${req.file.filename}`
+          }
           bcryptjs.genSalt(10, function (err, salt) {
             bcryptjs.hash(req.body.password, salt, function (err, hash) {
   
@@ -74,7 +78,7 @@ router.post('/', function (req, res) {
             });
           });
         }
-      }
+      //}
     });
   })
 
