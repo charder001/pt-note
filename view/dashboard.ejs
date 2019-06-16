@@ -4,7 +4,9 @@
 </head>
 
 <main>
+    <%if (currentUser.profilePicture) { %>
 <img src=<%= currentUser.profilePicture %> name="profilePicture">
+<% } %>
 <h1>Welcome <%= currentUser.firstName %>, you're logged in to MotoMatch!</h1>
 </form>
 <h1>Add user</h1>
@@ -33,6 +35,9 @@
 </ul>
 <form method="get" action="/signout">
     <button>Logout</button>
+</form>
+<form action="/users/delete" method="get">
+    <button type="submit">Delete account</button>
 </form>
 </main>
 <% include partials/footer %>

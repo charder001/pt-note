@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 var mongoose = require('mongoose')
 var multer = require("multer")
 var path = require("path")
 var bcryptjs = require("bcryptjs")
-var User = require('../models/user.js');
+var User = require('../models/user.js')
 
 const storage = multer.diskStorage({
     destination: './static/images/uploads/',
@@ -40,27 +40,42 @@ router.get('/', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-
+  // console.log(req.body.genres)
     uploadImage(req, res, (error) => {
       if (error) {
         console.log(error);
-      } else {
-        console.log("rovy " + req.file);
-        if (req.file == undefined) {
-          console.log("no file uploaded");
-        } else {
+      } 
+      // else {
+      //   console.log("rovy " + req.file);
+      //   if (req.file == undefined) {
+      //     console.log("no file uploaded");
+      //   } 
+        else {
           var firstName = req.body.firstName
           var lastName = req.body.lastName
           var emailaddress = req.body.emailaddress
+
+          var genres = req.body.genres
+          console.log(`${genres} and type = ${typeof genres}`)
+
+          if (req.file){
+
           var profilePicture = `/images/uploads/${req.file.filename}`
+          }
           bcryptjs.genSalt(10, function (err, salt) {
             bcryptjs.hash(req.body.password, salt, function (err, hash) {
-  
+              
               var newuser = new User()
               newuser.firstName = firstName
               newuser.lastName = lastName
               newuser.userName = emailaddress
               newuser.password = hash
+              // if(genres.length <= 1){
+                console.log(genres + " " + typeof Object.keys(genres))
+                genres.forEach(function(elem){
+                  newuser.genres.push(elem)
+                })
+
               newuser.profilePicture = profilePicture
               newuser.save(function (err, savedUser) {
                 if (err) {
@@ -74,7 +89,7 @@ router.post('/', function (req, res) {
             });
           });
         }
-      }
+      //}
     });
   })
 

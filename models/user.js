@@ -10,6 +10,7 @@ var userSchema = new Schema({
       unique: true
     },
     password: String,
+    genres: Array,
     profilePicture: String
   })
 

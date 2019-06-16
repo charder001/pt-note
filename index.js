@@ -2,15 +2,16 @@
 var express = require("express")
 var session = require("express-session")
 var bodyParser = require("body-parser")
-var slug = require("slug")
-var path = require("path")
-var find = require("array-find")
-var mongojs = require("mongojs")
+// var slug = require("slug")
+// var path = require("path")
+// var find = require("array-find")
+// var mongojs = require("mongojs")
 var mongoose = require('mongoose')
-var multer = require("multer")
-var User = require('./models/user.js')
+// var multer = require("multer")
+// var User = require('./models/user.js')
+var expressValidator = require('express-validator')
 
-var bcryptjs = require("bcryptjs")
+// var bcryptjs = require("bcryptjs")
 
 // Routes
 var dashboard = require("./routes/dashboard.js")
@@ -21,6 +22,8 @@ var update = require("./routes/update.js");
 var signout = require("./routes/signout.js")
 var removeUser = require("./routes/remove-user.js")
 var profile = require("./routes/profile.js")
+var deleteUser = require("./routes/delete-user.js")
+
 
 //Linking mongoose to MongoDB Database called "MotoMatch"
 mongoose.connect('mongodb://' + "localhost" + '/' + "MotoMatch", {
@@ -32,6 +35,7 @@ express()
   .use(bodyParser.urlencoded({
     extended: true
   }))
+  .use(expressValidator())
 
   //Configure sessions
   //https://www.youtube.com/watch?v=zsOGmMuwhT4&t=385s for help with user sessions
@@ -56,6 +60,8 @@ express()
   .use("/update", update)
   .use("/users/delete/:id", removeUser)
   .use("/profile", profile)
+  .use("/users/delete", deleteUser)
+
 
   //Listen on the defined port
   .listen(3008, function () {
