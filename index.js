@@ -2,15 +2,15 @@
 var express = require("express")
 var session = require("express-session")
 var bodyParser = require("body-parser")
-var slug = require("slug")
-var path = require("path")
-var find = require("array-find")
-var mongojs = require("mongojs")
+// var slug = require("slug")
+// var path = require("path")
+// var find = require("array-find")
+// var mongojs = require("mongojs")
 var mongoose = require('mongoose')
-var multer = require("multer")
-var User = require('./models/user.js')
+// var multer = require("multer")
+// var User = require('./models/user.js')
 
-var bcryptjs = require("bcryptjs")
+// var bcryptjs = require("bcryptjs")
 
 // Routes
 var dashboard = require("./routes/dashboard.js")

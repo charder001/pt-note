@@ -40,7 +40,7 @@ router.get('/', function (req, res) {
 })
 
 router.post('/', function (req, res) {
-
+  // console.log(req.body.genres)
     uploadImage(req, res, (error) => {
       if (error) {
         console.log(error);
@@ -52,15 +52,20 @@ router.post('/', function (req, res) {
           var firstName = req.body.firstName
           var lastName = req.body.lastName
           var emailaddress = req.body.emailaddress
+          var genres = req.body.genres
+          console.log(`${genres} and type = ${typeof genres}`)
           var profilePicture = `/images/uploads/${req.file.filename}`
           bcryptjs.genSalt(10, function (err, salt) {
             bcryptjs.hash(req.body.password, salt, function (err, hash) {
-  
+              
               var newuser = new User()
               newuser.firstName = firstName
               newuser.lastName = lastName
               newuser.userName = emailaddress
               newuser.password = hash
+              genres.forEach(function(elem){
+                newuser.genres.push(elem)
+              })
               newuser.profilePicture = profilePicture
               newuser.save(function (err, savedUser) {
                 if (err) {
