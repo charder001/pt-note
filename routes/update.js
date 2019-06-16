@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var bcryptjs = require("bcryptjs")
 var User = require('../models/user.js');
 
 
@@ -36,7 +37,11 @@ router.post('/', function(req, res) {
                 user.lastName = req.body.lastName
               }
               if (req.body.password) {
-                user.password = req.body.password
+                bcryptjs.genSalt(10, function (err, salt) {
+                  bcryptjs.hash(req.body.password, salt, function (err, hash) {
+                    user.password = hash
+                  })
+                })
               }
               user.save(function (err, updatedObject) {
                 if (err) {
