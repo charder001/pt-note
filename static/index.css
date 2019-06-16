@@ -1,156 +1,94 @@
-body {
-	margin: 0;
-	padding: 0;
-	font-family: "roboto";
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
 }
 
-#listmap {
-	border-top: 1px solid black;
-	text-align: center;
-	position: fixed;
-	width: 100%;
-	top: 0;
-	padding: 1em 0 1em 0;
-	background-color: white;
-	display: flex;
-	border-bottom: 1px solid black;
+header{
+    width: 100%;
+    height: 70px;
 }
 
-#listmap a{
-	width: 50%;
-	border-right: 1px solid black;
+footer{
+    width: 100%;
+    height: 100px;
 }
 
-#bottomnav {
-	border-top: 1px solid black;
-	text-align: center;
-	position: fixed;
-	width: 100%;
-	bottom: 0;
-	padding: 1em 0 1em 0;
-	background-color: white;
-	display: flex;
+h1{
+    font-size: 1.75em;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-nav a {
-	margin: 0em 0em 0em 0em;
-	text-decoration: none;
-	color: black;
-	width: 25%;
-	border-right: 1px solid black;
+h2{
+    font-size: 1.5em;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.exploreprofile {
-	border: 1px solid black;
-	border-radius: 1em;
-	margin: .5em;
-	overflow: hidden;
+h3{
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.exploreprofile h2 {
-	position: absolute;
-	color: white;
-	margin-left: 1em;
-
+p{
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.exploreprofile p, .exploreprofile a {
-	margin-left: 1em;
-
+label{
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 
-.exploreprofile img {
-	width: 100%;
-	height: 18em;
-	object-fit: cover;
-	border-top-right-radius: 1em;
-	border-top-left-radius: 1em;
+a{
+    text-decoration: none;
+    color: #000;
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 
-
-.exploreprofile a {
-	text-decoration: none;
-	font-weight: bold;
+a:visited{
+    text-decoration: none;
+    color: #000;
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   
 }
 
-.exploreprofile:first-of-type {
-	margin-top: 4em;
+button{
+    width: 100px;
+    padding: 5px;
+    background-color: #6868aa;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 0.75em;
 }
 
-.exploreprofile:last-of-type {
-	margin-bottom: 4em;
+button:active{
+    width: 100px;
+    padding: 5px;
+    background-color: #e95d71;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 0.75em;
 }
 
-.listprofile {
-	border-bottom: 1px solid black;
-	display: flex;
+input{
+    padding: 5px;
+    background-color: #fff;
+    font-size: 1em;
+    border-radius: 3px;
+    border: 0.5px #000 solid;
 }
 
-.listprofile img {
-	max-width: 100%;
-	max-height: 5em;
-	border-radius: 100em;
-	margin: .5em 0 .5em .2em;
-}
-
-.listprofile h2 {
-	margin: .8em 0 0 0;
-}
-
-.listprofile p {
-	opacity: .5;
-	margin-top: .5em;
-	display: block;
-}
-
-.profiletext {
-	margin-left: .5em;
-}
-
-#profile {
-	margin: 0 auto 0 auto;
-	text-align: center;
-}
-
-#profile h1 {
-	margin: 2em 0 .3em 0;
-}
-
-#userimg {
-	border-radius: 50%;
-	width: 10em;
-	height: 10em;
-	object-fit: cover;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.profileicons {
-	display: flex;
-	justify-content: center;
-}
-
-.icons {
-	border-radius: 50%;
-	width: 4em;
-	height: 4em;
-	object-fit: cover;
-	display: block;
-	border: 1px solid lightgray;
-}
-
-.search {
-	border-bottom: 1px solid black;
-}
-
-.search {
-	opacity: .7;
-	width: 100%;
-}
-
-.search input {
-	width: 100%;
-	padding: 1em;
+img{
+    width: 200px;
+    height: 200px;
 }
 
