@@ -36,6 +36,16 @@ Great, your node app should be running!
 
 Navigate to `localhost:3008/login` to see the app.
 
+## Built with
+
+*HTML
+*CSS
+*ES5
+*Node
+*Express
+*Mongoose
+*MongoDB
+
 ## Note
 
 This app uses a .env file to declare your database and port info, you could create your own or feel free to contact us and we will gladly supply you with it!
