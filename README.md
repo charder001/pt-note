@@ -26,6 +26,8 @@ Using npm, install all of our dependencies
 
 Create a mongoDB database called "MotoMatch" with a collection called users.
 
+## Usage
+
 After all the dependencies have installed and your database is up and running, you can start the node app using
 
 `node index.js`
