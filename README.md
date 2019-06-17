@@ -14,7 +14,7 @@ MongoDB and compass
 ### Installation
 First, clone the repository to your local machine using your terminal
 
-git clone [https://github.com/TomasS666/pt-note]
+`git clone [https://github.com/TomasS666/pt-note]
 
 After cloning our repository, navigate to the folder
 
