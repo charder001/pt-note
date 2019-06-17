@@ -55,6 +55,6 @@ Please feel free to leave any questions, comments or feedback regarding our proj
 ## License
 This project falls under the [MIT](https://choosealicense.com/licenses/mit/) License, please read it.
 
-## Collaboration
+## Code of conduct
 
 Please contact us if you'd like to collaborate on our project and refer to our [Code of Conduct](CONTRIBUTING.md) to see what standards we adhere to.
