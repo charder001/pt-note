@@ -57,4 +57,4 @@ This project falls under the [MIT](https://choosealicense.com/licenses/mit/) Lic
 
 ## Collaboration
 
-Please contact us if you'd like to collaborate on our project and refer to our (Code of Conduct)[CONTRIBUTING.md] to see what standards we adhere to.
+Please contact us if you'd like to collaborate on our project and refer to our [Code of Conduct](CONTRIBUTING.md) to see what standards we adhere to.
