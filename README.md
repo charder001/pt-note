@@ -38,5 +38,7 @@ Navigate to `localhost:3008/login` to see the app.
 
 This app uses a .env file to declare your database and port info, you could create your own or feel free to contact us and we will gladly supply you with it!
 
+Please feel free to leave any questions, comments or feedback regarding our project in the issues section of this repo.
+
 ## License
 This project falls under the [MIT](https://choosealicense.com/licenses/mit/) License, please read it.
