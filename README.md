@@ -38,13 +38,13 @@ Navigate to `localhost:3008/login` to see the app.
 
 ## Built with
 
-*HTML
-*CSS
-*ES5
-*Node
-*Express
-*Mongoose
-*MongoDB
+* HTML
+* CSS
+* ES5
+* Node
+* Express
+* Mongoose
+* MongoDB
 
 ## Note
 
