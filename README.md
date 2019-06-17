@@ -18,18 +18,18 @@ First, clone the repository to your local machine using your terminal
 
 After cloning our repository, navigate to the folder
 
-cd pt-note
+`cd pt-note`
 
 Using npm, install all of our dependencies 
 
-npm install
+`npm install`
 
 Create a mongoDB database called "MotoMatch" with a collection called users.
 
 After all the dependencies have installed and your database is up and running, you can start the node app using
 
-node index.js
+`node index.js`
 
 Great, your node app should be running!
 
-Navigate to localhost:3008/login to see the app.
+Navigate to `localhost:3008/login` to see the app.
